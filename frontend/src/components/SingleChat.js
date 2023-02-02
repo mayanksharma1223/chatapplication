@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react'
 
 import io from "socket.io-client"
-const ENDPOINT = "https://chatterbox-1qxw.onrender.com";
+const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -87,6 +87,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 }
                 setNewMessage("");
 
+
                 const { data } = await axios.post("api/message", {
                     content: newMessage,
                     chatId: selectedChat
@@ -95,6 +96,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
                 socket.emit('new message', data)
                 setMessages([...messages, data])
+                setFetchAgain(!fetchAgain)
             } catch (error) {
                 toast({
                     title: "Error Occured!",
@@ -128,6 +130,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
                 socket.emit('new message', data)
                 setMessages([...messages, data])
+                setFetchAgain(!fetchAgain)
             } catch (error) {
                 toast({
                     title: "Error Occured!",
